@@ -235,7 +235,7 @@ SELECT * FROM burgers;
 -- (ᄅ) SELECT 문
 -- (ᄆ) DROP DATABASE 문
 
--- 정답: 
+-- 정답: ㄷㄹㄱㄴㅁ
 
 
 
