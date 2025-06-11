@@ -183,6 +183,19 @@ VALUES
 -- 잘 들어갔나 확인
 SELECT * FROM transactions;
 
+-- 거래 금액의 총합 구하기
+SELECT SUM(amount)
+FROM transactions;
+
+-- 구글과 거래한 금액의 총합은?
+SELECT SUM(amount)
+FROM transactions
+WHERE msg = 'Google';
+
+-- 거래 금액의 최대값/최소값 구하기
+
+
+-- 페이팔과 거래한 금액의 최대값/최소값은?
 
 
 
