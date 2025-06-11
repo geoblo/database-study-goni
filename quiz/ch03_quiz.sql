@@ -178,5 +178,6 @@ WHERE category = '전자기기' AND stock <= 10;
 -- 각 제품의 재고를 모두 소진했을 때 매출을 구해 제품명과 총판매액을 출력하세요.
 
 -- 정답:
-
+SELECT name, price * stock AS total_sales_amount
+FROM products;
 
