@@ -150,10 +150,10 @@ WHERE id = 5;
 -- 애해하면 최우선 순위 ()를 사용
 
 -- Quiz: 다음 쿼리의 수행 결과는?
-SELECT 3 + 5 * 2;
-SELECT (3 + 5) * 2;
-SELECT TRUE OR TRUE AND FALSE;
-SELECT (TRUE OR TRUE) AND FALSE;
+SELECT 3 + 5 * 2; -- 13
+SELECT (3 + 5) * 2; -- 16
+SELECT TRUE OR TRUE AND FALSE; -- 1
+SELECT (TRUE OR TRUE) AND FALSE; -- 0
 
 -- Quiz
 -- 1. 다음 빈칸에 들어갈 용어는? (입력 예: ㄱㄴㄷㄹㅁ)
@@ -169,7 +169,7 @@ SELECT (TRUE OR TRUE) AND FALSE;
 -- (ᄅ) WHERE
 -- (ᄆ) OR
 
--- 정답: 
+-- 정답: ㄹㄴㄱㅁㄷ
 
 
 /*
@@ -178,17 +178,28 @@ SELECT (TRUE OR TRUE) AND FALSE;
 
 -- Quiz: 대학 DB 만들기
 -- university DB 생성 및 진입
-
+CREATE DATABASE university;
+USE university;
 
 -- students 테이블 생성
--- 아이디(정수형 숫자)
--- 닉네임(문자형: 최대 50자)
--- 수학 성적(정수형 숫자)
--- 영어 성적(정수형 숫자)
--- 프로그래밍 성적(정수형 숫자)
+-- id: 아이디(정수형 숫자)
+-- nickname: 닉네임(문자형: 최대 50자)
+-- math: 수학 성적(정수형 숫자)
+-- english: 영어 성적(정수형 숫자)
+-- programming: 프로그래밍 성적(정수형 숫자)
 -- 기본키 지정: id
+CREATE TABLE students (
+	id INTEGER,           -- 아이디
+	nickname VARCHAR(50), -- 닉네임
+	math INTEGER, 	      -- 수학 성적
+	english INTEGER,      -- 영어 성적
+	programming INTEGER,  -- 프로그래밍 성적
+	PRIMARY KEY (id)      -- 기본키 지정: id
+);
 
 -- students 데이터 삽입
+INSERT INTO students (id, nickname, math, english, programming)
+VALUES
 	(1, 'Sparkles', 98, 96, 93),
 	(2, 'Soldier', 82, 66, 98),
 	(3, 'Lapooheart', 84, 70, 82),
@@ -199,8 +210,21 @@ SELECT (TRUE OR TRUE) AND FALSE;
 	(8, 'Queen', 99, 100, 88);
 
 -- 확인
+SELECT * FROM students;
+
+-- 필터링 연습!
+-- 1. 모든 과목 성적이 90점 이상인 학생은?
 
 
+-- 2. 75점 미만이 하나라도 있는 학생은?
 
+
+-- 3. 모든 학생의 총점은?
+
+
+-- 4. 모든 학생의 평균은?
+
+
+-- 5. 총점이 270 이상인 학생의 닉네임, 총점, 평균은?
 
 
