@@ -95,10 +95,86 @@ SELECT FALSE OR TRUE; -- 1
 SELECT FALSE OR FALSE; -- 0
 
 -- 5500원 보다 싸고, 동시에 단백질량이 25g 보다 많은 버거
+SELECT *
+FROM burgers
+WHERE price < 5500 AND protein > 25;
 
 -- 5500원 보다 싸거나, 단백질량이 25g 보다 많은 버거
+SELECT *
+FROM burgers
+WHERE price < 5500 OR protein > 25;
 
 -- 단백질량이 25g 보다 많지 않은 버거
+SELECT *
+FROM burgers
+WHERE NOT (protein > 25); -- 혼동 방지를 위해 괄호를 명시하는 것도 좋음
+-- WHERE !(protein > 25); -- MySQL에서만 작동
+-- 가독성과 이식성을 위해서는 NOT을 사용하는 것이 가장 안전
+
+-- 3) 산술 연산자
+-- 사칙 연산 등을 위한 수학적 연산 기호
+-- WHERE 절과 SELECT 절에서 사용 가능
+SELECT 100 + 20;
+SELECT 100 - 20;
+SELECT 100 * 20;
+SELECT 100 / 20;
+SELECT 100 % 20;
+
+-- 산술 연산자 활용 예
+-- SELECT문에서의 산술 연산 예시
+SELECT *, price / gram * 100 AS 'price/100g' -- 따옴표("", '') 또는 백틱(``)으로 감싸기
+FROM burgers;
+-- 100g당 가격을 계산하여 price/100g 이라는 별칭(alias)으로 반환함
+
+-- WHERE 절에서 산술 연산 예시
+-- 가격에 10%를 더한 값이 6500원을 넘는 버거만 조회
+SELECT *
+FROM burgers
+WHERE (price * 1.1) > 6500;
+
+-- 짝수 ID를 가진 버거만 조회
+SELECT *
+FROM burgers
+WHERE id % 2 = 0;
+
+-- UPDATE 문에서 산술 연산 예시
+-- id가 5인 버거의 가격을 500원 인하
+UPDATE burgers
+SET price = price - 500
+WHERE id = 5;
+
+-- 4) 연산자의 우선순위
+-- 어떤 연산자를 먼저 수행할 것인가의 기준
+-- 우선순위가 높은 것부터 낮은 순으로 수행
+-- 암기X(쓰다 보면 자연스럽게 익혀짐)
+-- 애해하면 최우선 순위 ()를 사용
+
+-- Quiz: 다음 쿼리의 수행 결과는?
+SELECT 3 + 5 * 2;
+SELECT (3 + 5) * 2;
+SELECT TRUE OR TRUE AND FALSE;
+SELECT (TRUE OR TRUE) AND FALSE;
+
+-- Quiz
+-- 1. 다음 빈칸에 들어갈 용어는? (입력 예: ㄱㄴㄷㄹㅁ)
+-- ① __________: 테이블 조회 시 필터링 조건을 작성하기 위해 사용하는 명령 
+-- ② __________: 같지 않음을 비교하는 연산자
+-- ③ __________: 두 조건을 동시에 만족하는 논리 연산자
+-- ④ __________: 두 조건 중 하나라도 만족하는 논리 연산자
+-- ⑤ __________: 특정 조건을 만족하지 않는 논리 연산자
+
+-- (ㄱ) AND
+-- (ᄂ) !=
+-- (ᄃ) NOT
+-- (ᄅ) WHERE
+-- (ᄆ) OR
+
+-- 정답: 
+
+
+
+
+
 
 
 
