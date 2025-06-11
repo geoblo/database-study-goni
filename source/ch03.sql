@@ -260,5 +260,3 @@ WHERE math > 80 AND programming > 80 OR English > 90;
 
 -- 정답: 2, 5
 
-
-
