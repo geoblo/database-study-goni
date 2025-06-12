@@ -172,13 +172,27 @@ CREATE TABLE memberships (
 -- 사용자 프로필 테이블 생성
 CREATE TABLE user_profiles (
 	id INTEGER, -- 아이디(표준 정수)
-     -- 이메일(가변 길이 문자: 최대 255자)
-    -- 전화번호(고정 길이 문자: 13자)
-    -- 자기소개(긴 문자열: 최대 64KB)
-    -- 프로필 사진(파일: 최대 16MB)
-    -- 성별(선택 목록 중 택 1)
-    -- 기본키 지정: id
+    email VARCHAR(255), -- 이메일(가변 길이 문자: 최대 255자)
+    phone_number CHAR(13), -- 전화번호(고정 길이 문자: 13자)
+    self_introduction TEXT, -- 자기소개(긴 문자열: 최대 64KB)
+    profile_picture MEDIUMBLOB, -- 프로필 사진(파일: 최대 16MB)
+    gender ENUM('남', '여'), -- 성별(선택 목록 중 택 1)
+    PRIMARY KEY (id) -- 기본키 지정: id
 );
+
+-- 사용자 프로필(user_profiles) 데이터 삽입
+INSERT INTO 
+	user_profiles (id, email, phone_number, self_introduction, profile_picture, gender)
+VALUES
+	(1, 'geoblo@naver.com', '012-3456-7890', '안녕하십니까!', NULL, '남'),
+	(2, 'hongsoon@example.com', '098-7654-3210', '반갑습니다요!', NULL, '여');
+    
+-- 데이터 조회
+SELECT *
+FROM user_profiles;
+
+
+
 
 
 
