@@ -108,7 +108,13 @@ VALUES
 -- CHAR: 고정 길이(최대 255자)
 -- VARCHAR: 가변 길이(최대 65,535자)
 -- CHAR와 VARCHAR 자료형의 사용 예
-
+CREATE TABLE addresses (
+	potal_code CHAR(5), -- 우편번호(고정 길이 문자: 5자), 주로 고정된 길이의 코드값(예: 국가코드)
+    -- 문자를 3개만 넣는 경우, 자동으로 공백(space) 문자를 채움(예: 'abc  ')
+    street_address VARCHAR(100) -- 거리 주소(가변 길이 문자: 최대 100자)
+    -- 최대 100글자 저장 가능하지만, 사용 메모리는 입력된 문자만큼만 사용(예: 'abc')
+    -- (참고) UTF-8 기준, VARCHAR(65535)는 현실적으로 불가능하고 VARCHAR(16383) 정도가 안전한 최대치
+);
 
 -- 2) TEXT
 -- 긴 문자열 저장을 위한 타입
@@ -117,19 +123,55 @@ VALUES
 -- => 그 이상을 저장하려면 TEXT가 필요
 -- 세부 타입 종류: TINYTEXT, TEXT, MEDIUMTEXT, LONGTEXT
 -- TEXT 자료형의 사용 예
-
-
+CREATE TABLE acticles (
+	title VARCHAR(200), -- 제목(가변 길이 문자: 최대 200자)
+    short_description TINYTEXT, -- 짧은 설명(최대 255Byte)
+    comments TEXT, -- 댓글(최대 64KB)
+    content MEDIUMTEXT, -- 본문(최대 16MB)
+    additional_info LONGTEXT -- 추가 정보(최대 4GB)
+);
 
 -- 3) BLOB
 -- 크기가 큰 파일 저장을 위한 타입
 -- 이미지, 오디오, 비디오 등의 저장에 사용
 -- 세부 타입 종류: TINYBLOB, BLOB, MEDIUMBLOB, LONGBLOB
 -- BLOB 자료형의 사용 예
+CREATE TABLE files (
+	file_name VARCHAR(200), -- 파일명(가변 길이 문자: 최대 200자)
+    small_thumbnail TINYBLOB, -- 작은 이미지 파일(최대 255Byte)
+    document BLOB, -- 일반 문서 파일(최대 64KB)
+    video MEDIUMBLOB, -- 비디오 파일(최대 16MB)
+    large_data LONGBLOB -- 대용량 파일(최대 4GB)
+);
 
+-- (참고)
+-- 자바 웹 개발을 포함한 대부분의 애플리케이션에서는 이미지나 동영상 같은 대용량 파일을
+-- 데이터베이스에 직접 저장하지 않고, 클라우드 스토리지나 파일 서버 등에 저장한 뒤,
+-- 그 경로나 URL만 데이터베이스에 저장하는 방식이 사실상 표준
 
-
+-- 왜 DB에 직접 저장하지 않을까?
+-- DB 부하가 큼, 성능이 느림, 백업/복구 어려움 등
 
 -- 4) ENUM
 -- 주어진 목록 중 하나만 선택할 수 있는 타입
 -- 입력 가능한 목록을 제한하여, 잘못된 입력을 예방
 -- ENUM 자료형의 사용 예
+CREATE TABLE memberships (
+	name VARCHAR(100), -- 회원명(가변 길이 문자: 최대 100자)
+    level ENUM('bronze', 'silver', 'gold') -- 회원 레벨(선택 목록 중 택1)
+);
+
+-- 실습: 문자형 사용하기
+-- 다음 데이터를 사용자 프로필(user_profiles) 테이블로 만들어 저장하려면?
+
+-- 아이디 | 이메일                  | 전화번호         | 자기소개      | 프로필 사진 | 성별
+-- -------------------------------------------------------------------------------
+-- 1     | geoblo@naver.com      | 012-3456-7890  | 안녕하십니까!  | NULL      | 남
+-- 2     | hongsoon@example.com  | 098-7654-3210  | 반갑습니다요!  | NULL      | 여
+
+
+
+
+
+
+
