@@ -269,6 +269,6 @@ WHERE
 SELECT title, start_time
 FROM events
 WHERE 
-	(event_date BETWEEN '2023-11-1' AND '2023-12-31')
+	(event_date BETWEEN '2023-11-01' AND '2023-12-31')
 	AND HOUR(start_time) >= 14;
 
