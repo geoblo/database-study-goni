@@ -59,7 +59,7 @@ CREATE TABLE products (
 -- 학생 기록(student_records) 테이블을 만들어 다음 데이터를 저장한다면?
 -- (학년은 초등학교 1학년부터 고등학교 3학년까지를 숫자 1~12로 표현할 것)
 
--- 아이디 | 학년 | 평균 점수 | 수업료
+-- 아이디  | 학년 | 평균 점수   | 수업료
 -- ----------------------------------
 -- 1     | 3   | 88.75   | 50000.00
 -- 2     | 6   | 92.5    | 100000.00
@@ -69,14 +69,67 @@ CREATE DATABASE data_type;
 USE data_type;
 SELECT DATABASE(); -- 확인
 
+-- 학생 기록 테이블 생성
+CREATE TABLE student_records (
+	id INTEGER, -- 아이디(표준 정수)
+    grade TINYINT UNSIGNED, -- 학년(부호가 없는 매우 작은 정수), 0~255
+    average_score FLOAT, -- 평균 점수(부동 소수점 방식의 실수)
+    tuition_fee DECIMAL(10, 2), -- 수업료(고정 소수점 방식의 실수), 돈계산 관련은 정확하게
+    PRIMARY KEY (id) -- 기본키 지정: id
+);
+
+-- 학생 기록 데이터 삽입
+INSERT INTO
+	student_records (id, grade, average_score, tuition_fee)
+VALUES
+	(1, 3, 88.75, 50000.00),
+    (2, 6, 92.5, 100000.00);
+    
+-- 데이터 조회
+SELECT * FROM student_records;
+
+-- 자료형의 범위를 벗어난 값을 입력 => 에러 발생!
+INSERT INTO
+	student_records (id, grade, average_score, tuition_fee)
+VALUES
+	(3, -2, 66.5, 20.00);
+
+INSERT INTO
+	student_records (id, grade, average_score, tuition_fee)
+VALUES
+	(4, 256, 66.5, 20.00);
+
+-- 2. 문자형
+-- 한글, 영어, 기호 등의 문자 저장을 위한 타입
+-- 다양한 세부 타입이 존재
+-- 종류: CHAR, VARCHAR, TEXT, BLOB, ENUM 등
+
+-- 1) CHAR vs VARCHAR
+-- CHAR: 고정 길이(최대 255자)
+-- VARCHAR: 가변 길이(최대 65,535자)
+-- CHAR와 VARCHAR 자료형의 사용 예
+
+
+-- 2) TEXT
+-- 긴 문자열 저장을 위한 타입
+-- CHAR/VARCHAR로는 감당하기 어려운 매우 긴 텍스트 데이터를 저장하기 위해 존재
+-- 예: VARCHAR는 최대 약 65KB 정도까지만 저장 가능(이마저도 문자셋에 따라 줄어듦)
+-- => 그 이상을 저장하려면 TEXT가 필요
+-- 세부 타입 종류: TINYTEXT, TEXT, MEDIUMTEXT, LONGTEXT
+-- TEXT 자료형의 사용 예
+
+
+
+-- 3) BLOB
+-- 크기가 큰 파일 저장을 위한 타입
+-- 이미지, 오디오, 비디오 등의 저장에 사용
+-- 세부 타입 종류: TINYBLOB, BLOB, MEDIUMBLOB, LONGBLOB
+-- BLOB 자료형의 사용 예
 
 
 
 
-
-
-
-
-
-
-
+-- 4) ENUM
+-- 주어진 목록 중 하나만 선택할 수 있는 타입
+-- 입력 가능한 목록을 제한하여, 잘못된 입력을 예방
+-- ENUM 자료형의 사용 예
