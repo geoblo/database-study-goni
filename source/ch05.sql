@@ -28,14 +28,54 @@
 -- 세부 타입이 존재: 차지하는 메모리 크기에 따른 분류
 -- 종류: TINYINT, SMALLINT, MEDIUMINT, INTEGER(또는 INT), BIGINT
 
-
-
-
+-- UNSIGNED(언사인드) 제약 조건 부여 가능: 음수 값을 허용하지 않는 정수
+-- CREATE TABLE 테이블명 (
+-- 	컬럼명 데이터_타입 UNSIGNED
+-- );
+-- 유효성 보장: 나이는 0~255의 유효한 값만 저장
+CREATE TABLE users (
+	age TINYINT UNSIGNED
+);
+-- 안전성 보장: 재고는 음수가 될 수 없음
+CREATE TABLE products (
+	stock INTEGER UNSIGNED
+);
 
 -- 2) 실수형
 -- 소수점을 포함하는 수 저장: 3.14, -9.81, ...
 -- 부동 소수점(floating-point): 가수부와 지수부를 통해 소수점 위치를 변경(FLOAT, DOUBLE)
 -- 고정 소수점(fixed-point): 자릿수가 고정된 실수를 저장(DECIMAL)
+
+-- 부동 소수점 vs 고정 소수점
+-- 부동 소수점: 넓은 범위를 표현 가능, 숫자 계산에 오차 발생(2진수 기반이라서)
+-- FLOAT과 DOUBLE 타입은 0.1을 정확히 저장하지 않고 근사값으로 저장(왜? 0.1은 2진수로 무한 소수)
+-- FLOAT: 약 7자리 정확도
+-- DOUBLE: 약 15~17자리 정확도
+-- 고정 소수점: 특정 범위 안에서 정확한 연산을 수행(10진수 기반이라서)
+-- DECIMAL 타입은 0.1을 근사값이 아니라 정확하게 저장
+-- 정확한 소수값이 필요하면 DECIMAL을 사용
+
+-- 실습: 숫자형 사용하기
+-- 학생 기록(student_records) 테이블을 만들어 다음 데이터를 저장한다면?
+-- (학년은 초등학교 1학년부터 고등학교 3학년까지를 숫자 1~12로 표현할 것)
+
+-- 아이디 | 학년 | 평균 점수 | 수업료
+-- ----------------------------------
+-- 1     | 3   | 88.75   | 50000.00
+-- 2     | 6   | 92.5    | 100000.00
+
+-- data_type DB 생성 및 진입
+CREATE DATABASE data_type;
+USE data_type;
+SELECT DATABASE(); -- 확인
+
+
+
+
+
+
+
+
 
 
 
