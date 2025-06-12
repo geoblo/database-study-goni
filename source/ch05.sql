@@ -258,6 +258,29 @@ VALUES
 SELECT *
 FROM events;
 
+-- Quiz
+-- 1. 다음은 orders(주문)테이블을 생성하는 쿼리이다. 바르게 설명한 것을 모두 고르세요.
+
+CREATE TABLE orders (
+	id INTEGER,              -- 아이디
+	name VARCHAR (255), 	 -- 상품명
+	price DECIMAL(10, 2),    -- 가격
+	quantity INTEGER,        -- 주문 수량
+	customer_name CHAR(100), -- 고객명
+	shipping_address TEXT,   -- 배송 주소
+	created_at DATETIME,     -- 주문 일시
+	PRIMARY KEY (id)
+);
+
+-- ① id는 기본키로 선언됐다.
+-- ② name은 최대 255자까지 저장할 수 있다.
+-- ③ price에 저장할 수 있는 최댓값은 9,999,999,999이다.
+-- ④ customer_name이 100자보다 짧으면, 고객명을 저장하고 남은 만큼의 메모리 공간이 절약된다.
+-- ⑤ create_at에는 날짜와 시간 값을 모두 저장할 수 있다.
+
+-- 정답:
+
+
 
 
 
