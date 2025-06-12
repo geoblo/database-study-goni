@@ -56,8 +56,6 @@
 -- 두 테이블을 연결하는 역할
 
 
-
-
 -- 제약 조건이란?
 -- 컬럼 생성 시 부여하는 특성
 -- 저장할 수 있는 값에 제한이나 규칙을 설정
@@ -67,3 +65,30 @@
 -- - DEFAULT: 컬럼에 입력값이 없을 시, 기본값을 부여
 -- - CHECK: 컬럼에 특정 조건을 부여, 반드시 만족하도록 강제(조건을 만족하지 않는 값 입력 시 에러), 예: 반드시 짝수
 -- - UNSIGNED: 숫자형 컬럼에 음수 허용을 금지(양수값만 저장하도록 제한)
+
+-- 제약 조건의 사용 예
+CREATE TABLE users (
+	id INTEGER AUTO_INCREMENT, -- 아이디(자동으로 1씩 증가)
+    email VARCHAR(100) UNIQUE, -- 이메일(고유한 값만 허용)
+	name VARCHAR(50) NOT NULL, -- 사용자명(NULL을 허용하지 않음)
+    status VARCHAR(10) DEFAULT 'active', -- 계좌 상태(기본값은 'active')
+    balance INTEGER UNSIGNED, -- 계좌 잔액(음수를 허용하지 않음)
+    age INTEGER CHECK (age >= 18), -- 나이(18세 이상만 허용)
+    PRIMARY KEY (id) -- 기본키 지정: id
+);
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
