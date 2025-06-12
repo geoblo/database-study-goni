@@ -406,17 +406,26 @@ WHERE HOUR(created_at) < 12;
 -- FROM 테이블명
 -- WHERE 컬럼명 BETWEEN 시작_값 AND 마지막_값;
 
-
 -- 두 가격 사이 범위의 모든 주문을 조회
 -- price가 10000~20000 사이의 주문 조회
-
+SELECT *
+FROM orders
+WHERE price BETWEEN 10000 AND 20000;
 
 -- 두 시각 사이 범위의 모든 주문의 개수 조회
--- 2024-11-15~2024-12-15 사이의 주문 개수의 합계
-
+-- 2024-11-15~2024-12-15 사이의 주문 개수
+SELECT COUNT(*)
+FROM orders
+WHERE created_at BETWEEN '2024-11-15' AND '2024-12-15';
 
 -- 상품명의 첫 글자가 'ㄱ'으로 시작하는 주문 조회
+SELECT *
+FROM orders
+WHERE name BETWEEN 'ㄱ' AND '깋'; -- name의 첫 글자가 'ㄱ'~'깋' 사이인 row 필터링
+-- 즉, 'ㄱ' 초성에 해당하는 문자 범위 조회
 
+-- 주의! 위 조건과 다른 의미
+-- WHERE name LIKE 'ㄱ%'; -- 'ㄱ'으로 시작하는 문자열 검색
 
 -- Quiz
 -- 2. 다음 빈칸에 들어갈 용어를 순서대로 고르면? (예: ㄱㄴㄷㄹㅁ)
@@ -432,7 +441,7 @@ WHERE HOUR(created_at) < 12;
 -- (ㄹ) EXTRACT()
 -- (ㅁ) TIME_TO_SEC()
 
--- 정답:
+-- 정답: ㄴㄷㄹㄱㅁ
 
 
 
