@@ -541,5 +541,5 @@ FROM likes;
 -- (ㄹ) UNIQUE
 -- (ㅁ) AUTO_INCREMENT
 
--- 정답: 
+-- 정답: ㅁㄴㄷㄱㄹ
 
