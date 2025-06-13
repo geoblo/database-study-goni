@@ -495,8 +495,37 @@ VALUES
 SELECT *
 FROM settings;
 
+-- 5. 좋아요 테이블 만들기
+CREATE TABLE likes (
+	id INTEGER AUTO_INCREMENT, -- 아이디(자동으로 1씩 증가)
+    user_id INTEGER, -- 좋아요를 누를 사용자 아이디
+    photo_id INTEGER, -- 좋아요가 달린 사진 아이디
+    PRIMARY KEY (id), -- 기본키 지정: id
+    FOREIGN KEY (user_id) REFERENCES users(id), -- 외래키 지정: user_id
+    FOREIGN KEY (photo_id) REFERENCES photos(id) -- 외래키 지정: photo_id
+);
 
+-- likes 데이터 삽입
+INSERT INTO likes (user_id, photo_id)
+VALUES
+	-- 1번 사진에 달린 좋아요: 1, 2번 사용자가 누름
+	(1, 1),
+	(2, 1),
+	-- 2번 사진에 달린 좋아요: 1, 2, 3번 사용자가 누름
+	(1, 2),
+	(2, 2),
+	(3, 2),
+	-- 3번 사진에 달린 좋아요: 1, 3번 사용자가 누름
+	(1, 3),
+	(3, 3),
+	-- 6번 사진에 달린 좋아요, 사용자 미등록(탈퇴?, 영정?)
+	(NULL, 6),
+	-- 7번 사진에 달린 좋아요: 사용자 미등록
+	(NULL, 7);
 
+-- 데이터 조회
+SELECT *
+FROM likes;
 
 
 
