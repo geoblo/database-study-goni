@@ -411,8 +411,36 @@ VALUES
 	('홍팍', 'sehongpark@cloudstudying.kr'),
 	('길벗', 'gilbut@cloudstudying.kr'),
 	('해삼', 'haesamq@cloudstudying.kr');
+    
+-- 데이터 조회
+SELECT * FROM users;
 
+-- 2. 사진 테이블 만들기
+CREATE TABLE photos (
+	id INTEGER AUTO_INCREMENT, -- 아이디(자동으로 1씩 증가)
+    filename VARCHAR(255) NOT NULL, -- 파일명(NULL을 허용하지 않음)
+    user_id INTEGER, -- 게시자 아이디
+    PRIMARY KEY (id), -- 기본키 지정: id
+    FOREIGN KEY (user_id) REFERENCES users(id) -- 외래키 지정: user_id
+);
 
+-- photos 데이터 삽입
+INSERT INTO photos (filename, user_id)
+VALUES
+	-- 1번 사용자가 게시한 사진
+	('길고양이.jpg', 1),
+	('일몰.jpg', 1),
+	('은하계.jpg', 1),
+	-- 2번 사용자가 게시한 사진
+	('백호.jpg', 2),
+	('검은 고양이 네로.jpg', 2),
+	-- 사용자가 등록되지 않은 사진
+	('삭제된 이미지.jpg', NULL),
+	('제한된 이미지.jpg', NULL);
+
+-- 데이터 조회
+SELECT *
+FROM photos;
 
 
 
