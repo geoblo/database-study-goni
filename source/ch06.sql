@@ -118,7 +118,77 @@ CREATE TABLE products (
 -- (ㄹ) NULL
 -- (ㅁ) 기본키(PK)
 
--- 정답: 
+-- 정답: ㄴㅁㄱㄹㄷ
+
+
+/*
+6.2 다양한 관계 만들기
+*/
+-- 외래키와 기본키를 연결하여 일대일/일대다/다대다 관계를 만들어 보자
+
+-- 1. 일대일 관계 만들기
+-- A 테이블의 한 데이터가 B 테이블의 한 데이터와만 연결된 관계
+-- 서로 긴밀한 연관성이 있거나, 하나의 테이블에서 분화된 경우의 관계
+-- 외래키의 위치는 양쪽 테이블 중 어느 곳에 두어도 되지만 사용 빈도가 더 적은 쪽에 두는 것이 일반적임
+
+-- relation DB 생성 및 진입
+CREATE DATABASE relation;
+USE relation;
+
+-- countries 테이블 생성
+CREATE TABLE countries (
+	id INTEGER, -- 아이디
+    name VARCHAR(255), -- 국가명
+    PRIMARY KEY (id) -- 기본키 지정: id
+);
+
+-- capitals 테이블 생성
+CREATE TABLE capitals (
+	id INTEGER, -- 아이디
+    name VARCHAR(255), -- 수도명
+    country_id INTEGER UNIQUE, -- 국가 아이디(수도가 속한 나라)
+    -- 타입은 국가 테이블과 동일하게 맞춤
+    -- 고유한 값만 허용(한 나라에 수도가 2개가 있으면 안됨) => UNIQUE: 일대일 관계를 만들기 위한 중요한 제약 조건
+    PRIMARY KEY (id), -- 기본키 지정: id
+    FOREIGN KEY (country_id) REFERENCES countries(id) -- 외래키 지정: country_id
+    -- country_id 외래키는 countries 테이블의 id 컬럼을 가르킨다는 의미(참조)
+);
+
+-- countries 데이터 삽입
+INSERT INTO countries (id, name)
+VALUES
+	(1, 'South Korea'),
+	(2, 'United States'),
+	(3, 'Japan');
+
+-- capitals 데이터 삽입
+INSERT INTO capitals (id, name, country_id)
+VALUES
+	(101, 'Seoul', 1),
+	(102, 'Washington D.C.', 2),
+	(103, 'Tokyo', 3);
+
+-- 확인
+SELECT * FROM countries;
+SELECT * FROM capitals;
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
