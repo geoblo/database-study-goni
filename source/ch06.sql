@@ -94,15 +94,31 @@ CREATE TABLE users (
 
 -- Quiz: 제약 조건 걸기
 CREATE TABLE products (
-  id INTEGER,           -- 상품 ID(자동 증가)
-  name VARCHAR(100),    -- 상품명(고유한 값만 허용)
-  category VARCHAR(50), -- 상품 카테고리(NULL 불가)
-  status VARCHAR(20),   -- 상품 상태(기본값: available)
-  dc_rate INTEGER,      -- 할인율(0~50% 제한)
-  stock INTEGER,        -- 재고 수량(음수 불가)
-                        -- 기본키 설정: id
+  id INTEGER AUTO_INCREMENT,           -- 상품 ID(자동 증가)
+  name VARCHAR(100) UNIQUE,    -- 상품명(고유한 값만 허용)
+  category VARCHAR(50) NOT NULL, -- 상품 카테고리(NULL 불가)
+  status VARCHAR(20) DEFAULT 'available',   -- 상품 상태(기본값: available)
+  -- dc_rate INTEGER CHECK (dc_rate BETWEEN 0 AND 50),      -- 할인율(0~50% 제한)
+  dc_rate INTEGER CHECK (dc_rate >= 0 AND dc_rate <= 50),
+  stock INTEGER UNSIGNED,        -- 재고 수량(음수 불가)
+  PRIMARY KEY (id)                      -- 기본키 설정: id
 );
 
+-- Quiz
+-- 1. 다음 빈칸에 들어갈 용어를 순서대로 고르세요. (예: ㄱㄴㄷㄹㅁ)
+-- ① __________: 여러 테이블에 분산 저장된 데이터가 서로 어떻게 연결돼 있는지를 정의한 개념
+-- ② __________: 테이블 내 모든 튜플을 유일하게 구분하는 칼럼 또는 칼럼의 조합
+-- ③ __________: 한 번 설정된 값은 변경될 수 없다는 성질
+-- ④ __________: 데이터가 존재하지 않는 상태
+-- ⑤ __________: 다른 테이블의 기본키를 가리키는 칼럼으로 두 테이블 간 관계를 만드는 칼럼
+
+-- (ㄱ) 불변성
+-- (ㄴ) 관계
+-- (ㄷ) 외래키(FK)
+-- (ㄹ) NULL
+-- (ㅁ) 기본키(PK)
+
+-- 정답: 
 
 
 
