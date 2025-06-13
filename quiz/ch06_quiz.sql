@@ -27,7 +27,7 @@
 -- 문제 3
 -- 다음 중 CHECK 제약 조건이 설정된 칼럼에 대해 위배되는 입력값을 고르세요.
 
-discount_rate INTEGER CHECK (discount_rate >= 0 AND discount_rate <= 50)
+discount_rate INTEGER CHECK (discount_rate >= 0 AND discount_rate <= 50);
 
 -- ① -5
 -- ② 0
