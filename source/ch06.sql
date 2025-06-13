@@ -50,6 +50,21 @@
 -- - 식별성: 레코드를 구분하는 명확한 기준 역할을 해야 함
 -- 일반적으로 기본키는 id로 명명
 
+-- 아래 (1)=(2) 내부적으로는 같은 의미를 가짐
+-- 주의: 제약 효과는 같을 수 있지만, PK는 구조적, 의미적으로도 특별한 역할을 가져서 완벽하게 똑같지는 않음
+-- 예: PK는 테이블당 하나만 가능, 외래키(FK) 참조할 때 PK가 우선임
+-- 되도록 PK를 사용하는 것이 더 명확하고 바람직
+CREATE TABLE example (
+	id INT,
+    PRIMARY KEY (id) -- (1)
+    
+    id INT NOT NULL,
+    UNIQUE (id) -- (2)
+    
+    id INT PRIMARY KEY
+    
+    id INT NOT NULL UNIQUE
+);
 
 -- 외래키(FK, Foreign Key)
 -- 다른 테이블의 기본키를 가리키는 컬럼
@@ -77,7 +92,16 @@ CREATE TABLE users (
     PRIMARY KEY (id) -- 기본키 지정: id
 );
 
-
+-- Quiz: 제약 조건 걸기
+CREATE TABLE products (
+  id INTEGER,           -- 상품 ID(자동 증가)
+  name VARCHAR(100),    -- 상품명(고유한 값만 허용)
+  category VARCHAR(50), -- 상품 카테고리(NULL 불가)
+  status VARCHAR(20),   -- 상품 상태(기본값: available)
+  dc_rate INTEGER,      -- 할인율(0~50% 제한)
+  stock INTEGER,        -- 재고 수량(음수 불가)
+                        -- 기본키 설정: id
+);
 
 
 
