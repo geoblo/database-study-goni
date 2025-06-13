@@ -278,15 +278,16 @@ SELECT * FROM appointments;
 CREATE TABLE persons (
 	id INTEGER,
     name VARCHAR(50),
-    
+    PRIMARY KEY (id)
 );
 
 -- 여권 테이블
 CREATE TABLE passports (
 	id INTEGER,
     passport_number VARCHAR(20),
-    person_id INTEGER,
-    
+    person_id INTEGER UNIQUE,
+    PRIMARY KEY (id),
+    FOREIGN KEY (person_id) REFERENCES persons(id)
 );
 
 -- 2. 회사와 직원(한 회사는 여러 직원을 고용할 수 있지만, 한 직원은 하나의 회사에만 소속)
@@ -294,7 +295,7 @@ CREATE TABLE passports (
 CREATE TABLE companies (
   id INTEGER,       -- ID
   name VARCHAR(50), -- 회사명
-  
+  PRIMARY KEY (id)
 );
 
 -- 직원 테이블
@@ -302,8 +303,8 @@ CREATE TABLE employees (
   id INTEGER,             -- ID
   name VARCHAR(50),       -- 직원명
   company_id INTEGER,     -- 회사_ID
-  
-  
+  PRIMARY KEY (id),
+  FOREIGN KEY (company_id) REFERENCES companies(id)
 );
 
 -- 3. 학생과 과목(한 학생은 여러 과목을 수강하고, 한 과목은 여러 학생이 수강할 수 있음)
@@ -311,14 +312,14 @@ CREATE TABLE employees (
 CREATE TABLE students (
   id INTEGER,          -- ID
   name VARCHAR(50),    -- 학생명
-  
+  PRIMARY KEY (id)
 );
 
 -- 과목 테이블
 CREATE TABLE subjects (
   id INTEGER,        -- ID
   title VARCHAR(50), -- 과목명
-  
+  PRIMARY KEY (id)
 );
 
 -- 수강 테이블(중간 테이블)
@@ -326,9 +327,43 @@ CREATE TABLE enrollments (
   id INTEGER,          -- ID
   student_id INTEGER,  -- 학생_ID
   subject_id INTEGER,  -- 과목_ID
-
-  
+  PRIMARY KEY (id),
+  FOREIGN KEY (student_id) REFERENCES students(id),
+  FOREIGN KEY (subject_id) REFERENCES subjects(id)
 );
+
+-- Quiz
+-- 2. 다음 세 테이블에 대한 설명으로 맞으면 O, 틀리면 X를 표시하시오.
+
+-- doctors
+-- id | name
+-- ------------
+-- 1  | 김 닥터
+-- 2  | 이 닥터
+-- 3  | 최 닥터
+
+-- patients
+-- id | name
+-- ------------
+-- 1  | 환자 A
+-- 2  | 환자 B
+-- 3  | 환자 C
+
+-- appointments
+-- id | doctor_id  | patient_id  | date
+-- -------------------------------------------
+-- 1  | 1          | 1           | 2025-01-01
+-- 2  | 1          | 2           | 2025-01-02
+-- 3  | 2          | 2           | 2025-01-03
+-- 4  | 2          | 3           | 2025-01-04
+-- 5  | 3          | 3           | 2025-01-05
+-- 6  | 3          | 1           | 2025-01-06
+
+-- ① '김 닥터'는 '환자 A'를 진료했다. (  )
+-- ② '이 닥터'는 3회의 진료 기록이 있다. (  )
+-- ③ '환자 C'는 '최 닥터'에게 진료를 받았다. (  )
+
+-- 정답:
 
 
 
