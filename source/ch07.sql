@@ -93,7 +93,8 @@ JOIN users AS u ON c.user_id = u.id;
 -- FULL 조인
 
 -- Quiz
--- 1. 다음은 comments 테이블과 photos 테이블을 조인하는 쿼리이다. 빈칸을 순서대로 채워 쿼리를 완성하시오. (예: aaa, bbb, ccc)
+-- 1. 다음은 comments 테이블과 photos 테이블을 조인하는 쿼리이다.
+-- 빈칸을 순서대로 채워 쿼리를 완성하시오. (예: aaa, bbb, ccc)
 
 -- SELECT body, filename
 -- FROM comments ① __________
