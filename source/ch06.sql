@@ -272,18 +272,63 @@ SELECT * FROM doctors;
 SELECT * FROM patients;
 SELECT * FROM appointments;
 
+-- Quiz: 관계 맺기
+-- 1. 사람과 여권(한 사람은 한 개의 여권을 가지고, 한 여권은 한 사람에게만 발급)
+-- 사람 테이블
+CREATE TABLE persons (
+	id INTEGER,
+    name VARCHAR(50),
+    
+);
 
+-- 여권 테이블
+CREATE TABLE passports (
+	id INTEGER,
+    passport_number VARCHAR(20),
+    person_id INTEGER,
+    
+);
 
+-- 2. 회사와 직원(한 회사는 여러 직원을 고용할 수 있지만, 한 직원은 하나의 회사에만 소속)
+-- 회사 테이블
+CREATE TABLE companies (
+  id INTEGER,       -- ID
+  name VARCHAR(50), -- 회사명
+  
+);
 
+-- 직원 테이블
+CREATE TABLE employees (
+  id INTEGER,             -- ID
+  name VARCHAR(50),       -- 직원명
+  company_id INTEGER,     -- 회사_ID
+  
+  
+);
 
+-- 3. 학생과 과목(한 학생은 여러 과목을 수강하고, 한 과목은 여러 학생이 수강할 수 있음)
+-- 학생 테이블
+CREATE TABLE students (
+  id INTEGER,          -- ID
+  name VARCHAR(50),    -- 학생명
+  
+);
 
+-- 과목 테이블
+CREATE TABLE subjects (
+  id INTEGER,        -- ID
+  title VARCHAR(50), -- 과목명
+  
+);
 
+-- 수강 테이블(중간 테이블)
+CREATE TABLE enrollments (
+  id INTEGER,          -- ID
+  student_id INTEGER,  -- 학생_ID
+  subject_id INTEGER,  -- 과목_ID
 
-
-
-
-
-
+  
+);
 
 
 
