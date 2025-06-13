@@ -100,7 +100,7 @@ JOIN users AS u ON c.user_id = u.id;
 -- FROM comments ① __________
 -- ② __________ photos AS p ③ __________ c.photo_id = p.id;
 
--- 정답: 
+-- 정답: AS c, JOIN, ON
 
 -- 2. 다음 조인에 대한 설명으로 옳지 않은 것은?
 -- ① 조인 칼럼은 자료형이 달라도 된다.
@@ -108,7 +108,7 @@ JOIN users AS u ON c.user_id = u.id;
 -- ③ 중복 칼럼은 '테이블명.칼럼명'과 같이 테이블명을 붙여 구분한다.
 -- ④ 조인 테이블에 별칭을 붙일 때는 AS 키워드를 사용한다.
 
--- 정답:
+-- 정답: 1
 
 
 /*
@@ -124,6 +124,10 @@ JOIN users AS u ON c.user_id = u.id;
 -- FROM 테이블A
 -- INNER JOIN 테이블B ON 테이블A.조인_컬럼 = 테이블B.조인_컬럼;
 
+-- photos 테이블과 users 테이블 INNER 조인
+SELECT *
+FROM photos p
+JOIN users u ON p.user_id = u.id;
 
 -- OUTER JOIN: 두 테이블 간의 조인 결과에 누락된 행을 포함시킬 수 있는 조인 방식, 종류는 크게 3가지
 -- 2. LEFT 조인
@@ -136,6 +140,10 @@ JOIN users AS u ON c.user_id = u.id;
 -- FROM 테이블A
 -- LEFT JOIN 테이블B ON 테이블A.조인_컬럼 = 테이블B.조인_컬럼;
 
+-- photos 테이블과 users 테이블 LEFT 조인
+SELECT *
+FROM photos p
+LEFT JOIN users u ON p.user_id = u.id;
 
 -- 3. RIGHT 조인
 -- 오른쪽 테이블(JOIN 절 테이블)의 모든 데이터에 왼쪽 테이블(FROM 절 테이블)을 조인함
@@ -148,7 +156,10 @@ JOIN users AS u ON c.user_id = u.id;
 -- FROM 테이블A
 -- RIGHT JOIN 테이블B ON 테이블A.조인_컬럼 = 테이블B.조인_컬럼;
 
-
+-- photos 테이블과 users 테이블 RIGHT 조인
+SELECT *
+FROM photos p
+RIGHT JOIN users u ON p.user_id = u.id;
 
 -- 4. FULL 조인
 -- 두 테이블의 모든 데이터를 결합하는 조인
@@ -176,3 +187,54 @@ JOIN users AS u ON c.user_id = u.id;
 -- (쿼리A)
 -- UNION ALL
 -- (쿼리B);
+
+-- UNION 연산을 활용하면 FULL 조인 결과를 생성 가능
+-- photos 테이블과 users 테이블 FULL 조인 = LEFT 조인 + RIGHT 조인 (중복 제거) => UNION
+(
+	SELECT *
+	FROM photos p
+	LEFT JOIN users u ON p.user_id = u.id
+)
+UNION -- 두 쿼리의 결과 테이블을 하나로 합치기(중복 데이터는 제거)
+(
+	SELECT *
+	FROM photos p
+	RIGHT JOIN users u ON p.user_id = u.id
+);
+
+-- Quiz
+-- 3. 다음 빈칸에 들어갈 용어를 차례대로 쓰시오. (예: ㄱㄴㄷㄹㅁ)
+-- ① __________: 가장 기본적인 조인 유형으로, 두 테이블에서 조인 조건을 만족하는 튜플을 찾아 조인
+-- ② __________: 왼쪽 테이블의 모든 튜플에 대해 조인 조건을 만족하는 오른쪽 테이블의 튜플을 조인하고, 조인할 수 없는 경우 NULL 값으로 채움
+-- ③ __________: 오른쪽 테이블의 모든 튜플에 대해 조인 조건을 만족하는 왼쪽 테이블의 튜플을 조인하고, 조인할 수 없는 경우 NULL 값으로 채움
+-- ④ __________: 두 테이블 사이에서 조인이 가능한 튜플뿐만 아니라 조인 불가능한 튜플도 모두 가져오고 빈 칼럼은 NULL 값으로 채움
+-- ⑤ __________: 두 쿼리의 결과 테이블을 하나로 합침
+
+-- (ㄱ) FULL JOIN
+-- (ㄴ) INNER JOIN
+-- (ㄷ) UNION
+-- (ㄹ) RIGHT JOIN
+-- (ㅁ) LEFT JOIN
+
+-- 정답: 
+
+
+/*
+7.3 조인 실습: 별그램 DB
+*/
+-- 가장 많이 사용되는 INNER 조인과 LEFT 조인을 연습!
+
+-- 1. 특정 사용자가 올린 사진 목록 출력하기
+-- 예: 홍팍이 업로드한 모든 사진의 파일명은?
+
+
+-- 2. 특정 사용자가 올린 사진의 좋아요 개수
+-- 예: 홍팍이 올린 모든 사진의 좋아요 개수는?
+
+
+-- 3. 특정 사용자가 쓴 댓글 개수
+-- 예: 해삼이가 작성한 모든 댓글의 개수는?
+
+
+-- 4. 모든 댓글 본문과 해당 댓글의 달린 사진의 파일명
+-- 예: 모든 댓글 본문과 함께 그 댓글이 달린 사진의 파일명을 함께 조회하려면?
