@@ -393,7 +393,24 @@ CREATE TABLE enrollments (
 -- - '사용자'는 여러 '사진'에 댓글을 작성할 수 있고, '사진' 또한 여러 '사용자'로부터 댓글을 받을 수 있습니다.
 -- - '사용자'는 여러 '사진'에 좋아요를 누를 수 있고, '사진' 또한 여러 '사용자'로부터 좋아요를 받을 수 있습니다.
 
+-- stargram DB 생성 및 진입
+CREATE DATABASE stargram;
+USE stargram;
 
+-- 1. 사용자 테이블 만들기
+CREATE TABLE users (
+	id INTEGER AUTO_INCREMENT, -- 아이디(자동으로 1씩 증가)
+    nickname VARCHAR(30), -- 닉네임
+    email VARCHAR(255) UNIQUE, -- 이메일
+    PRIMARY KEY (id) -- 기본키 지정: id
+);
+
+-- 사용자 데이터 삽입(id는 자동 증가값으로 입력되므로 생략)
+INSERT INTO users (nickname, email)
+VALUES
+	('홍팍', 'sehongpark@cloudstudying.kr'),
+	('길벗', 'gilbut@cloudstudying.kr'),
+	('해삼', 'haesamq@cloudstudying.kr');
 
 
 
