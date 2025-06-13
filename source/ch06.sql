@@ -474,6 +474,40 @@ VALUES
 SELECT *
 FROM comments;
 
+-- 4. 개인 설정 테이블 만들기
+CREATE TABLE settings (
+	id INTEGER AUTO_INCREMENT, -- 아이디(자동으로 1씩 증가)
+    private BOOLEAN NOT NULL, -- 계정 공개 여부(NULL 허용하지 않음)
+    account_suggestions BOOLEAN NOT NULL, -- 계정 추천 여부(NULL 허용하지 않음)
+    user_id INTEGER UNIQUE, -- 사용자 아이디(고유한 값만 허용), 1:1 연결을 위해 UNIQUE 지정
+    PRIMARY KEY (id), -- 기본키 지정: id
+    FOREIGN KEY (user_id) REFERENCES users(id) -- 외래키 지정: user_id
+);
+
+-- settings 데이터 삽입
+INSERT INTO settings (private, account_suggestions, user_id)
+VALUES
+	(FALSE, FALSE, 1), 	-- 1번 사용자(비공개 계정, 계정 추천 불가)
+	(FALSE, TRUE, 2), 	-- 2번 사용자(비공개 계정, 계정 추천 허용)
+	(TRUE, TRUE, 3); 	-- 3번 사용자(공개 계정, 계정 추천 허용)
+
+-- 데이터 조회
+SELECT *
+FROM settings;
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
