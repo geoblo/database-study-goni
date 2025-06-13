@@ -442,7 +442,37 @@ VALUES
 SELECT *
 FROM photos;
 
+-- 3. 댓글 테이블 만들기
+CREATE TABLE comments (
+	id INTEGER AUTO_INCREMENT, -- 아이디(자동으로 1씩 증가)
+    body VARCHAR(1000), -- 댓글 본문
+    user_id INTEGER, -- 작성자 아이디
+	photo_id INTEGER, -- 댓글이 달린 사진 아이디
+    PRIMARY KEY (id), -- 기본키 지정: id
+    FOREIGN KEY (user_id) REFERENCES users(id), -- 외래키 지정: user_id
+    FOREIGN KEY (photo_id) REFERENCES photos(id) -- 외래키 지정: photo_id
+);
 
+-- comments 데이터 삽입
+INSERT INTO comments (body, user_id, photo_id)
+VALUES
+	-- 1번 사진에 달린 댓글
+	('미야옹~', 1, 1),
+	('냐옹!', 2, 1),
+	('냥냥~', 3, 1),
+	-- 2번 사진에 달린 댓글
+	('일몰이 멋지네요', 1, 2),
+	('해가 바다로 스윽~', 2, 2),
+	-- 3번 사진에 달린 댓글
+	('안드로메다 성운인가?', 1, 3),
+	('성운이 아니라 은하임', 3, 3),
+	-- 대상 사진이 없는 댓글
+	('와우~', 3, NULL),
+	('오우야~', 3, NULL);
+
+-- 데이터 조회
+SELECT *
+FROM comments;
 
 
 
