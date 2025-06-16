@@ -8,7 +8,7 @@
 -- ③ 두 테이블 간 조건 없이 모든 행을 결합
 -- ④ 하나의 테이블에서 중복된 데이터 제거
 
--- 정답: 
+-- 정답: 2
 
 
 -- 문제 2
@@ -19,7 +19,8 @@
 -- ③ MySQL에서는 지원하지 않는다.
 -- ④ UNION ALL 연산자를 사용했을 때와 결과가 같다.
 
--- 정답: 
+-- 정답: 4
+-- 중복 레코드(튜플)를 제거하고 합치는 UNION 연산자를 사용했을 때와 결과가 같음
 
 
 -- 문제 3
@@ -30,7 +31,7 @@
 -- ③ 두 테이블의 결과 집합에 포함된 칼럼 수와 각 칼럼의 자료형이 동일해야 한다.
 -- ④ UNION 연산자는 테이블 간의 관계를 기반으로 데이터를 결합한다.
 
--- 정답: 
+-- 정답: 3
 
 
 -- 문제 4
@@ -41,7 +42,7 @@
 -- ③ 데이터의 중복을 제거하기 위해
 -- ④ 여러 테이블 간의 관련 데이터를 결합해 의미 있는 정보를 추출하기 위해
 
--- 정답: 
+-- 정답: 4
 
 
 -- 문제 5
@@ -59,7 +60,7 @@
 --   FROM 테이블1 
 --   LEFT JOIN 테이블2;
 
--- 정답: 
+-- 정답: 3
 
 
 -- 2. 조인 연습 문제
@@ -122,35 +123,48 @@ CREATE TABLE library_staff (
 -- 모든 회원의 이름, 생년월일, 주소를 조회하세요.(회원 프로필이 없는 회원은 제외)
 
 -- 정답:
-
+SELECT name, date_of_birth, address
+FROM members m
+JOIN member_profiles mp ON m.id = mp.member_id;
 
 
 -- 문제 2
 -- 모든 회원의 이름, 생년월일, 주소를 조회하세요.(회원 프로필이 없는 경우 NULL로 출력)
 
 -- 정답:
-
+SELECT name, date_of_birth, address
+FROM members m
+LEFT JOIN member_profiles mp ON m.id = mp.member_id;
 
 
 -- 문제 3
 -- 대출 기록을 보고 도서를 빌려 간 회원명과 대출한 도서명을 조회하세요.
 
 -- 정답:
-
+SELECT name, title
+FROM borrow_records br
+JOIN members m ON br.member_id = m.id
+JOIN books b ON br.book_id = b.id;
 
 
 -- 문제 4
 -- 모든 도서명과 대출 날짜를 조회하세요.(대출되지 않은 도서는 NULL로 출력)
 
 -- 정답:
-
+SELECT title, borrow_date
+FROM books b
+LEFT JOIN borrow_records br ON b.id = br.book_id;
 
 
 -- 문제 5
 -- 회원과 같은 이름을 가진 직원의 이름과 역할을 조회하세요.
 
 -- 정답:
-
+-- 관계 설정 없이도 JOIN을 할 수 있다는 것을 보여줌
+-- 일반적으로는 관계 있는 테이블끼리 JOIN을 수행
+SELECT ls.name, role
+FROM members m
+JOIN library_staff ls ON m.name = ls.name;
 
 
 -- 문제 6
@@ -165,5 +179,13 @@ CREATE TABLE library_staff (
 -- 단, 중복된 이름은 제거
 
 -- 정답:
+SELECT name
+FROM members
+UNION
+SELECT name
+FROM library_staff;
+
+
+
 
 
