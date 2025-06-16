@@ -31,13 +31,32 @@ VALUES
 	('female', 170.2),
 	('male', 182.1);
 
+-- 확인
+SELECT * FROM students;
 
+-- 전체 집계: 전체 학생의 평균 키 구하기
+SELECT AVG(height)
+FROM students;
 
+-- 남학생의 평균
+SELECT AVG(height)
+FROM students
+WHERE gender = 'male';
 
+-- 여학생의 평균
+SELECT AVG(height)
+FROM students
+WHERE gender = 'female';
 
+-- 그룹화 분석: 각 성별 평균 키 구하기
+SELECT 그룹화_컬럼, 집계_함수(일반_컬럼)
+FROM 테이블명
+WHERE 조건
+GROUP BY 그룹화_컬럼;
 
-
-
+SELECT gender, AVG(height)
+FROM students
+GROUP BY gender; -- 성별을 기준으로 그룹화하겠다.
 
 
 
