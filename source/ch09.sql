@@ -92,7 +92,52 @@ WHERE 컬럼명 연산자 (
 -- ② 서브쿼리는 다양한 위치에서 사용할 수 있다. (  )
 -- ③ 서브쿼리는 단일 값만 반환한다. (  )
 
--- 정답: 
+-- 정답: O, O, X
+
+
+/*
+9.2 다양한 위치에서의 서브쿼리
+*/
+-- 8장에서 다루었던 마켓 DB를 기반으로 다양한 서브쿼리를 연습!
+USE market;
+
+-- 1. SELECT 절에서의 서브쿼리
+-- 1x1 단일값만 반환하는 서브쿼리만 사용 가능
+-- 여러 행 또는 여러 컬럼을 반환하면 SQL이 어떤 값을 선택해야 할 지 몰라 에러 발생
+
+-- 모든 결제 정보에 대한 평균 결제 금액과의 차이는?
+SELECT 
+	payment_type AS '결제 유형',
+    amount AS '결제 금액',
+    amount - (평균결제금액) AS '평균 결제 금액과의 차이'
+FROM payments;
+
+-- Quiz: 평균 결제 금액
+SELECT AVG(amount)
+FROM payments;
+
+-- () 괄호 안에 넣기
+SELECT 
+	payment_type AS '결제 유형',
+    amount AS '결제 금액',
+    amount - (SELECT AVG(amount) FROM payments) AS '평균 결제 금액과의 차이'
+FROM payments;
+
+-- 잘못된 사용 예
+SELECT 
+	payment_type AS '결제 유형',
+    amount AS '결제 금액',
+    amount - (SELECT AVG(amount), '123' FROM payments) AS '평균 결제 금액과의 차이'
+FROM payments;
+
+
+
+
+
+
+
+
+
 
 
 
