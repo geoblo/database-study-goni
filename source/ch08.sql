@@ -207,10 +207,102 @@ ORDER BY 정렬_컬럼1 [ASC | DESC], 정렬_컬럼2 [ASC | DESC], ...;
 -- ASC: 오름차순(생략 시 기본값)
 -- DESC: 내림차순
 
+-- 단일 컬럼 정렬: 결제 테이블에서 결제 금액이 높은 순서대로 조회하려면?
+-- 결제 금액에 대한 정렬: 내림차순
+SELECT 
+	ptype AS '결제 유형',
+    amount AS '결제 금액' -- 2) 필요한 컬럼만 선택하고, 별칭을 부여하고
+FROM payments -- 1) payments 테이블에서
+ORDER BY amount DESC; -- 3) amount 기준으로 내림차순 정렬함
 
+-- 다중 컬럼 정렬: 결제 테이블에서 결제 유형은 오름차순, 결제 금액은 내림차순으로 정렬하려면?
+-- 두 컬럼으로 정렬: 결제 유형, 결제 금액
+SELECT 
+	ptype AS '결제 유형',
+    amount AS '결제 금액'
+FROM payments
+ORDER BY ptype ASC, amount DESC; -- ptype의 오름차순 정렬 후, amount의 내림차순 정렬(순서 중요)
 
+-- 3. 조회 개수 제한(LIMIT, OFFSET)
+-- 조회 결과 중 상위 N개의 레코드만을 조회하는 명령
+-- LIMIT 절을 이용해 반환하려는 레코드의 개수를 정의
 
+SELECT 컬럼1, 컬럼2, ...
+FROM 테이블명
+LIMIT N;
 
+-- 결제 금액 상위 3개 데이터만 조회하려면?
+SELECT *
+FROM payments
+ORDER BY amount DESC
+LIMIT 3;
+
+-- 상위 N개 데이터가 아닌 중간 데이터를 가져오고 싶다면?
+-- LIMIT 절에 OFFSET 키워드를 추가해 읽어 올 데이터의 시작 지점을 조정할 수 있음
+
+SELECT 컬럼1, 컬럼2, ...
+FROM 테이블명
+LIMIT N OFFSET M; -- N: 가져올 레코드의 개수, M: 건너뛸 레코드의 개수
+-- 또는 LIMIT M, N;
+
+-- 결제 금액 4등~6등까지 조회
+SELECT * -- 2) 모든 컬럼을 선택
+FROM payments -- 1) payments 테이블에서
+ORDER BY amount DESC -- 3) amount의 내림차순으로 정렬한 후
+LIMIT 3 OFFSET 3; -- 4) 처음 3개 행은 건너뛰고 3개 행만 가져옴
+
+-- Tip: LIMIT 활용
+-- 페이지네이션(Pagination) 구현할 때 SQL에서 가장 기본적으로 사용
+-- 예: 한 페이지당 10개씩 보여줄 경우
+-- 1페이지
+SELECT *
+FROM products
+LIMIT 0, 10;
+
+-- 2페이지
+SELECT *
+FROM products
+LIMIT 10, 10;
+
+-- 3페이지
+SELECT *
+FROM products
+LIMIT 20, 10;
+
+-- (하드코딩X) OFFSET 계산 방법
+-- OFFSET = (현재 페이지 번호 - 1) * 페이지당 개수
+
+-- 정렬은 반드시 함께 쓰자!
+SELECT *
+FROM products
+ORDER BY created_at DESC
+LIMIT 10 OFFSET 20;
+-- 정렬 없이 LIMIT만 쓰면 페이지가 뒤죽박죽 될 수 있음
+
+-- (참고) 성능 주의사항
+-- OFFSET이 커질수록 성능이 떨어짐(건너뛸 데이터를 계속 읽기 때문)
+
+-- Quiz
+-- 다음은 payments 테이블에서 ptype(결제 유형)별로 결제 횟수와 평균 결제 금액을 구하는 쿼리이다.
+-- 빈칸을 순서대로 채워 이를 완성하시오.
+
+-- 그룹화와 정렬
+-- -------------------------------------
+-- 결제 유형       | 결제 횟수  | 평균 결제 금액
+-- -------------------------------------
+-- COCOA PAY    | 3        | 41913.3333
+-- LOTTI CARD   | 3        | 39823.3333
+-- SAMSONG CARD | 3        | 36423.3333
+
+SELECT 
+	ptype AS '결제 유형',
+	① __________ AS '결제 횟수',
+	AVG(amount) AS '평균 결제 금액'
+FROM payments
+GROUP BY ② __________
+ORDER BY COUNT(*) DESC, ③ __________ DESC;
+
+-- 정답: 
 
 
 
