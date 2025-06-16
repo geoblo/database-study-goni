@@ -132,9 +132,37 @@ GROUP BY gender;
 -- 1. 다음 설명이 맞으면 O, 틀리면 X를 표시하시오.
 -- ① 그룹화 분석이란 데이터를 특정 그룹으로 나누어 분석하는 것이다. (  )
 -- ② GROUP BY 절에는 반드시 하나의 칼럼만 지정해야 한다. (  )
--- ③ 그룹화된 쿼리에서 SELECT 절에 포함된 칼럼은 GROUP BY 절에서 지정한 그룹화 칼럼이거나 집계 함수에 사용된 칼럼이어야 한다. (  )
+-- ③ 그룹화된 쿼리에서 SELECT 절에 포함된 칼럼은 
+-- GROUP BY 절에서 지정한 그룹화 칼럼이거나 집계 함수에 사용된 칼럼이어야 한다. (  )
 
--- 정답: 
+-- 정답: O, X, O
+
+
+/*
+8.2 그룹화 필터링, 정렬, 조회 개수 제한
+*/
+-- 실습 데이터 셋 만들기
+-- payments 테이블 생성
+CREATE TABLE payments (
+	id INTEGER AUTO_INCREMENT, 	-- 아이디(자동으로 1씩 증가)
+	amount INTEGER, 			-- 결제 금액
+	ptype VARCHAR(50), 			-- 결제 유형
+	PRIMARY KEY (id) 			-- 기본키 지정: id
+);
+
+-- payments 데이터 삽입
+INSERT INTO payments (amount, ptype)
+VALUES
+	(33640, 'SAMSONG CARD'),
+	(33110, 'SAMSONG CARD'),
+	(31200, 'LOTTI CARD'),
+	(69870, 'COCOA PAY'),
+	(32800, 'COCOA PAY'),
+	(42210, 'LOTTI CARD'),
+	(46060, 'LOTTI CARD'),
+	(42520, 'SAMSONG CARD'),
+	(23070, 'COCOA PAY');
+
 
 
 
