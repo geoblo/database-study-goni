@@ -59,5 +59,91 @@ FROM students
 GROUP BY gender; -- 성별을 기준으로 그룹화하겠다.
 
 
+-- 그룹화의 특징 3가지
+-- 1) 집계 함수와 함께 사용해야 함
+-- 그룹별 유의미한 분석을 얻기 위해서는 집계 함수 사용
+-- 단순 GROUP BY 절만 사용하는 것은 데이터를 그룹으로 묶기만 함(의미 없음)
+SELECT gender
+FROM students
+GROUP BY gender;
+
+-- 2) 여러 컬럼으로 그룹화할 수 있다.
+SELECT 그룹화_컬럼1, 그룹화_컬럼2, 집계_함수(일반_컬럼)
+FROM 테이블명
+WHERE 조건
+GROUP BY 그룹화_컬럼1, 그룹화_컬럼2;
+
+-- 예: 특정 도시의 연도별 총매출 집계
+-- sales 테이블 생성
+CREATE TABLE sales (
+	id INTEGER AUTO_INCREMENT,  	-- 아이디(자동으로 1씩 증가)
+	city VARCHAR(50) NOT NULL,   	-- 도시명
+	sale_date DATE NOT NULL,      	-- 판매 날짜
+	amount INTEGER NOT NULL,     	-- 판매 금액
+	PRIMARY KEY (id)				-- 기본키 지정: id
+);
+
+-- sales 데이터 삽입
+INSERT INTO sales (city, sale_date, amount) 
+VALUES
+	('Seoul', '2023-01-15', 1000),
+	('Seoul', '2023-05-10', 2000),
+	('Seoul', '2023-08-29', 2500),
+	('Seoul', '2024-02-14', 4000),
+	('Busan', '2023-03-05', 1500),
+	('Busan', '2024-05-10', 1800),
+	('Busan', '2024-07-20', 3000),
+	('Incheon', '2023-11-25', 1200),
+	('Incheon', '2024-03-19', 2200),
+	('Incheon', '2024-09-12', 3300);
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
