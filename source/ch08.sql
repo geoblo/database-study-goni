@@ -288,7 +288,7 @@ LIMIT 10 OFFSET 20;
 
 -- 그룹화와 정렬
 -- -------------------------------------
--- 결제 유형       | 결제 횟수  | 평균 결제 금액
+-- 결제 유형      | 결제 횟수  | 평균 결제 금액
 -- -------------------------------------
 -- COCOA PAY    | 3        | 41913.3333
 -- LOTTI CARD   | 3        | 39823.3333
@@ -303,10 +303,141 @@ GROUP BY ② __________
 ORDER BY COUNT(*) DESC, ③ __________ DESC;
 
 -- 정답: 
+SELECT 
+	ptype AS '결제 유형',
+	COUNT(*) AS '결제 횟수',
+	AVG(amount) AS '평균 결제 금액'
+FROM payments
+GROUP BY ptype
+ORDER BY COUNT(*) DESC, AVG(amount) DESC;
 
 
+/*
+8.3 그룹화 분석 실습: 마켓 DB
+*/
+-- 마켓 DB를 활용하여 그룹화, 그룹화 필터링, 정렬, 조회 개수 제한을 연습!
+-- (ch08_09_market_db.png 참고)
 
+-- 마켓 DB 데이터 셋
+-- • users(사용자): 사용자의 id(아이디), email(이메일), nickname(닉네임)을 저장합니다.
+-- • orders(주문): 주문의 id(아이디), status(주문 상태), created_at(주문 생성 시각)을 저장합니다.
+-- • payments(결제): 결제의 id(아이디), amount(결제 금액), payment_type(결제 유형)을 저장합니다.
+-- • products(상품): 상품의 id(아이디), name(상품명), price(가격), product_type(상품 유형)을 저장합니다.
+-- • order_details(주문 상세): 주문 상세의 id(아이디), count(판매 수량)를 저장합니다.
 
+-- market DB 생성 및 진입
+CREATE DATABASE market;
+USE market;
+
+-- users 테이블 생성
+CREATE TABLE users (
+	id INTEGER AUTO_INCREMENT, 		-- 아이디(자동으로 1씩 증가)
+	email VARCHAR(255) UNIQUE, 		-- 이메일(고유한 값만 허용)
+	nickname VARCHAR(255) UNIQUE, 	-- 닉네임(고유한 값만 허용)
+	PRIMARY KEY (id) 				-- 기본키 지정: id
+);
+
+-- users 데이터 삽입
+INSERT INTO users (email, nickname)
+VALUES
+	('sehongpark@cloudstudying.kr', '홍팍'),
+	('kuma@cloudstudying.kr', '쿠마'),
+	('hawk@cloudstudying.kr', '호크');
+    
+-- orders 테이블 생성
+CREATE TABLE orders (
+	id INTEGER AUTO_INCREMENT, 	-- 아이디(자동으로 1씩 증가)
+	status VARCHAR(50), 		-- 주문 상태
+	created_at DATETIME, 		-- 주문 일시
+	user_id INTEGER, 			-- 사용자 아이디
+	PRIMARY KEY (id), 			-- 기본키 지정: id
+	FOREIGN KEY (user_id) REFERENCES users(id) -- 외래키 지정: user_id
+);
+
+-- orders 데이터 삽입
+INSERT INTO orders (status, created_at, user_id)
+VALUES
+	('배송 완료', '2024-11-12 11:07:12', 1),
+	('배송 완료', '2024-11-17 22:14:54', 1),
+	('배송 완료', '2024-11-24 19:13:46', 2),
+	('배송 완료', '2024-11-29 23:57:29', 3),
+	('배송 완료', '2024-12-06 22:25:13', 3),
+	('배송 완료', '2025-01-02 13:04:25', 2),
+	('배송 완료', '2025-01-06 15:45:51', 2),
+	('장바구니', '2025-03-06 14:54:23', 1);
+    
+-- payments 테이블 생성
+CREATE TABLE payments (
+	id INTEGER AUTO_INCREMENT, 	-- 아이디(자동으로 1씩 증가)
+	amount INTEGER, 			-- 결제 금액
+	payment_type VARCHAR(50), 	-- 결제 유형
+	order_id INTEGER, 			-- 주문 아이디
+	PRIMARY KEY (id), 			-- 기본키 지정: id
+	FOREIGN KEY (order_id) REFERENCES orders(id) -- 외래키 지정: order_id
+);
+
+-- payments 데이터 삽입
+INSERT INTO payments (amount, payment_type, order_id)
+VALUES
+	(9740, 'SAMSONG CARD', 1),
+	(13800, 'SAMSONG CARD', 2),
+	(32200, 'LOTTI CARD', 3),
+	(28420, 'COCOA PAY', 4),
+	(18000, 'COCOA PAY', 5),
+	(5910, 'LOTTI CARD', 6),
+	(17300, 'LOTTI CARD', 7);
+
+-- products 테이블 생성
+CREATE TABLE products (
+	id INTEGER AUTO_INCREMENT, 	-- 아이디(자동으로 1씩 증가)
+	name VARCHAR(100), 			-- 상품명
+	price INTEGER, 				-- 가격
+	product_type VARCHAR(50), 	-- 상품 유형
+	PRIMARY KEY(id) 			-- 기본키 지정: id
+);
+
+-- products 데이터 삽입
+INSERT INTO products (name, price, product_type)
+VALUES
+	('우유 900ml', 1970, '냉장 식품'),
+	('참치 마요 120g', 4400, '냉장 식품'),
+	('달걀 감자 샐러드 500g', 6900, '냉장 식품'),
+	('달걀 듬뿍 샐러드 500g', 6900, '냉장 식품'),
+	('크림 치즈', 2180, '냉장 식품'),
+	('우유 식빵', 2900, '상온 식품'),
+	('샐러드 키트 6봉', 8900, '냉장 식품'),
+	('무항생제 특란 20구', 7200, '냉장 식품'),
+	('수제 크림 치즈 200g', 9000, '냉장 식품'),
+	('플레인 베이글', 1300, '냉장 식품');
+    
+-- order_details 테이블 생성
+CREATE TABLE order_details (
+	id INTEGER AUTO_INCREMENT, 	-- 아이디(자동으로 1씩 증가)
+	order_id INTEGER, 			-- 주문 아이디
+	product_id INTEGER, 		-- 상품 아이디
+	count INTEGER, 				-- 주문 수량
+	PRIMARY KEY (id), 			-- 기본키 지정: id
+	FOREIGN KEY (order_id) REFERENCES orders(id), 	 -- 외래키 지정: order_id
+	FOREIGN KEY (product_id) REFERENCES products(id) -- 외래키 지정: product_id
+);
+
+-- order_details 데이터 삽입
+INSERT INTO order_details (order_id, product_id, count)
+VALUES
+	(1, 1, 2),
+	(1, 6, 2),
+	(2, 3, 1),
+	(2, 4, 1),
+	(3, 7, 2),
+	(3, 8, 2),
+	(4, 2, 3),
+	(4, 5, 4),
+	(4, 10, 5),
+	(5, 9, 2),
+	(6, 1, 3),
+	(7, 8, 2),
+	(7, 6, 1),
+	(8, 6, 3);
 
 
 
