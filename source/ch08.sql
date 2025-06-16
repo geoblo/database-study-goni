@@ -544,18 +544,3 @@ GROUP BY name
 ORDER BY SUM(price * count) DESC
 LIMIT 3;
 
--- 추가 실습 코드
--- 실제 결제 금액 기반
-SELECT 
-	name AS '상품명',
-	SUM(amount) AS '누적 매출'
-FROM products
-JOIN order_details ON products.id = order_details.product_id
-JOIN orders ON order_details.order_id = orders.id
-			AND status = '배송 완료'
-JOIN payments ON payments.order_id = orders.id
-GROUP BY name
-ORDER BY SUM(amount) DESC
-LIMIT 3;
-
-

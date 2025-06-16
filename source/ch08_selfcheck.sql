@@ -11,7 +11,20 @@
 -- 크림 치즈      | 2180    | 8720
 -- 우유 식빵      | 2900    | 8700
 
+-- 누적 매출은 price * count(가격 * 판매 수량)으로 구합니다.
+
 USE market;
 
+SELECT 
+	name AS 상품명,
+    price AS 가격,
+    SUM(price * count) AS '누적 매출'
+FROM products p
+JOIN order_details od ON od.product_id = p.id
+JOIN orders o ON od.order_id = o.id
+WHERE status = '배송 완료'
+GROUP BY name, price
+ORDER BY price ASC
+LIMIT 4;
 
 
