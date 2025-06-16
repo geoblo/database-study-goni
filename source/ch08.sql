@@ -97,10 +97,44 @@ VALUES
 	('Incheon', '2024-03-19', 2200),
 	('Incheon', '2024-09-12', 3300);
 
+-- 확인
+SELECT * FROM sales;
 
+-- 특정 도시의 연도별 총매출 집계
+-- 일단 먼저 특정 도시별 총매출 집계
+SELECT city, SUM(amount)
+FROM sales
+GROUP BY city;
 
+SELECT 
+	city AS 도시, 
+    YEAR(sale_date) AS '판매 연도', 
+    SUM(amount) AS '총 매출' -- 3) 특정 도시의 연도별 총 매출 집계 조회
+FROM sales -- 1) sales 테이블을
+GROUP BY city, YEAR(sale_date); -- 2) 도시와 연도로 그룹화한 후
 
+-- 3) SELECT 절에 올 수 있는 컬럼이 제한적이다.
+-- 사용 가능한 컬럼:
+-- - 그룹화 컬럼: GROUP BY 절에서 지정한 컬럼
+-- - 집계된 컬럼: 집계 함수에 사용된 컬럼
 
+-- 잘못된 컬럼 사용 예시
+SELECT id, gender, AVG(height) -- id 컬럼 사용 못함
+FROM students
+GROUP BY gender;
+
+-- 이렇게는 가능
+SELECT SUM(id), gender, AVG(height)
+FROM students
+GROUP BY gender;
+
+-- Quiz
+-- 1. 다음 설명이 맞으면 O, 틀리면 X를 표시하시오.
+-- ① 그룹화 분석이란 데이터를 특정 그룹으로 나누어 분석하는 것이다. (  )
+-- ② GROUP BY 절에는 반드시 하나의 칼럼만 지정해야 한다. (  )
+-- ③ 그룹화된 쿼리에서 SELECT 절에 포함된 칼럼은 GROUP BY 절에서 지정한 그룹화 칼럼이거나 집계 함수에 사용된 칼럼이어야 한다. (  )
+
+-- 정답: 
 
 
 
