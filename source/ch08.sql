@@ -163,6 +163,52 @@ VALUES
 	(42520, 'SAMSONG CARD'),
 	(23070, 'COCOA PAY');
 
+-- 확인
+SELECT * FROM payments;
+
+-- 1. 그룹화 필터링(HAVING)
+-- 그룹화한 결과에서 특정 조건을 만족하는 그룹의 데이터만 가져오는 것
+-- GROUP BY 절에 HAVING 절을 추가하여 수행
+-- 주로 집계 함수 결과에 조건을 걸 때 사용
+
+SELECT 그룹화_컬럼, 집계_함수(일반_컬럼)
+FROM 테이블명
+WHERE 일반_필터링_조건 -- 그룹화 하기 전에 개별 행(row)에 대해 필터링하는 행 단위 필터링
+GROUP BY 그룹화_컬럼
+HAVING 그룹_필터링_조건; -- 그룹핑된 결과에 대해 필터링하는 그룹 단위 필터링
+
+-- 결제 유형별 평균 결제 금액이 40,000원 이상인 데이터는?
+-- 우선 결제 유형별 평균 결제 금액 구하기
+SELECT 
+	ptype AS '결제 유형', 
+    AVG(amount) AS '평균 결제 금액'
+FROM payments
+GROUP BY ptype;
+
+-- 위 결과에 40,000원 이상인 데이터 구하기 => HAVING
+SELECT 
+	ptype AS '결제 유형', 
+    AVG(amount) AS '평균 결제 금액'
+FROM payments
+-- WHERE AVG(amount) > 40000 -- WHERE 절은 GROUP BY나 집계 함수가 처리되기 전에 실행되기 때문
+GROUP BY ptype
+HAVING AVG(amount) > 40000;
+
+-- 2. 데이터 정렬(ORDER BY)
+-- 정렬: 쿼리 결과를 오름차순 또는 내리차순으로 배열하는 것
+-- ORDER BY 절을 사용하여 수행
+-- SELECT로 조회된 데이터를 기준으로 정렬하는 작업(SELECT가 먼저 수행됨)
+
+SELECT *
+FROM 테이블명
+WHERE 조건
+ORDER BY 정렬_컬럼1 [ASC | DESC], 정렬_컬럼2 [ASC | DESC], ...;
+
+-- ASC: 오름차순(생략 시 기본값)
+-- DESC: 내림차순
+
+
+
 
 
 
