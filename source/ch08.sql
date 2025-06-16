@@ -510,12 +510,13 @@ LIMIT 3; -- 8)
 -- Quiz: 실행 순서를 번호로 달아보기
 
 -- Quiz
--- 3. market DB에서 배송 완료된 상품별로 누적 매출 상위 3개 상품 정보를 조회하고자 한다. 다음 쿼리의 빈칸을 채워 완성하시오.
+-- 3. market DB에서 배송 완료된 상품별로 누적 매출 상위 3개 상품 정보를 조회하고자 한다. 
+-- 다음 쿼리의 빈칸을 채워 완성하시오.
 
 -- ------------------------------
 -- 상품명              | 누적 매출
 -- ------------------------------
--- 무항생제 특란 20구   | 28800
+-- 무항생제 특란 20구    | 28800
 -- 수제 크림 치즈 200g  | 18000
 -- 샐러드 키트 6봉      | 17800
 
@@ -530,63 +531,31 @@ GROUP BY name
 ORDER BY SUM(② __________) DESC
 LIMIT 3;
 
--- 정답: 
+-- 정답: price * count, price * count
+-- 상품 가격 기준 이론상 매출액: 실제 결제와 무관하며, 할인/부분결제/결제 누락 등을 반영하지 않음
+SELECT 
+	name AS '상품명',
+	SUM(price * count) AS '누적 매출'
+FROM products
+JOIN order_details ON products.id = order_details.product_id
+JOIN orders ON order_details.order_id = orders.id
+			AND status = '배송 완료'
+GROUP BY name
+ORDER BY SUM(price * count) DESC
+LIMIT 3;
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+-- 추가 실습 코드
+-- 실제 결제 금액 기반
+SELECT 
+	name AS '상품명',
+	SUM(amount) AS '누적 매출'
+FROM products
+JOIN order_details ON products.id = order_details.product_id
+JOIN orders ON order_details.order_id = orders.id
+			AND status = '배송 완료'
+JOIN payments ON payments.order_id = orders.id
+GROUP BY name
+ORDER BY SUM(amount) DESC
+LIMIT 3;
 
 
