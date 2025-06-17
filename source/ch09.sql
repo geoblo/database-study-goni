@@ -240,6 +240,60 @@ HAVING SUM(price * count) > (
 -- 정답: O, O, O
 
 
+/*
+9.3 IN, ANY, ALL, EXISTS
+*/
+-- 주로 WHERE 절에서의 서브쿼리와 쓰임
+
+-- 1. IN 연산자
+-- 괄호 사이 목록에 포함되는 대상을 찾음
+
+-- 형식
+컬럼명 IN (쉼표로_구분된_값_목록);
+-- 또는
+컬럼명 IN (다중_행의_단일_컬럼을_반환하는_서브쿼리);
+
+-- IN 연산자 사용 예1: 값 목록을 입력받는 경우
+-- 상품명이 '우유 식빵', '크림 치즈'인 대상의 id 목록은?
+SELECT id
+FROM products
+WHERE name IN ('우유 식빵', '크림 치즈'); -- 5, 6
+
+-- IN 연산자 사용 예2: 서브쿼리를 입력받는 경우
+-- '우유 식빵', '크림 치즈'를 포함하는 모든 주문의 상세 내역
+SELECT *
+FROM order_details
+WHERE product_id IN (
+	-- 서브쿼리: 우유 식빵과 크림 치즈의 아이디를 반환(Nx1)
+    SELECT id
+	FROM products
+	WHERE name IN ('우유 식빵', '크림 치즈')
+);
+
+-- IN 연산자 사용 예3: 조인과 IN 연산자
+-- '우유 식빵', '크림 치즈'를 주문한 사용자의 아이디와 닉네임은?
+-- users에 products를 바로 붙일 수 없으므로 orders와 order_details를 붙여 연결
+SELECT
+	DISTINCT u.id,
+    nickname
+FROM users u
+JOIN orders o ON u.id = o.user_id
+JOIN order_details od ON o.id = od.order_id
+JOIN products p ON od.product_id = p.id
+WHERE name IN ('우유 식빵', '크림 치즈');
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
