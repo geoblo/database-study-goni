@@ -15,6 +15,10 @@ FROM users;
 -- 41790.0000
 
 -- 정답: 
+-- 평균 결제 금액 = 전체 결제 금액 / 사용자 수
+SELECT 
+	SUM(amount) / (SELECT COUNT(*) FROM users) AS '1인당 평균 결제 금액'
+FROM payments;
 
 
 -- 2 다음은 사용자 아이디별로 총 결제 금액을 집계하는 쿼리입니다.
@@ -31,6 +35,15 @@ GROUP BY u.id;
 -- 41790.0000
 
 -- 정답:
+SELECT
+	AVG(total_amount) AS '1인당 평균 결제 금액'
+FROM (
+	SELECT u.id AS user_id, SUM(amount) AS total_amount
+	FROM users u
+	JOIN orders o ON u.id = o.user_id
+	JOIN payments p ON o.id = p.order_id
+	GROUP BY u.id
+) AS sub; -- FROM절 서브쿼리 별칭 필수
 
 
 -- 3 앞의 두 문제(1과 2)의 정답 쿼리를 실행하면 다음과 같이 동일한 결과가 나옵니다. 그 이유를 설명하세요.
@@ -39,7 +52,8 @@ GROUP BY u.id;
 -- ------------------
 -- 41790.0000
 
--- 정답: 
+-- 정답: 모든 사용자가 결제에 참여했기 때문
+-- 1은 결제에 참여하지 않은 전체 인원으로 집계, 2는 진짜 결제한 사람만 집계
 
 
 -- 4 다음은 최근에 배송받은 사용자의 아이디를 찾는 쿼리입니다.
@@ -51,6 +65,20 @@ ORDER BY created_at DESC
 LIMIT 1;
 
 -- 정답:
+SELECT nickname, SUM(amount)
+FROM users u
+JOIN orders o ON o.user_id = u.id
+JOIN payments p ON p.order_id = o.id
+WHERE u.id = (
+	SELECT user_id
+	FROM orders
+	WHERE status = '배송 완료'
+	ORDER BY created_at DESC
+	LIMIT 1
+)
+GROUP BY nickname;
+
+
 
 
 
