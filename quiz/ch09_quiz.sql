@@ -115,6 +115,46 @@ CREATE TABLE salary_records (
 	FOREIGN KEY (employee_id) REFERENCES employees(id) -- 외래키 지정: employee_id
 );
 
+-- 더미 데이터
+INSERT INTO departments (id, name, location) VALUES
+(1, 'IT', 'Seoul'),
+(2, 'HR', 'Busan'),
+(3, 'Sales', 'Incheon');
+
+INSERT INTO employees (id, name, hire_date, salary, department_id) VALUES
+(1, 'Alice', '2020-01-01', 5000, 1),
+(2, 'Bob', '2019-03-15', 6000, 1),
+(3, 'Charlie', '2018-07-23', 4000, 2),
+(4, 'David', '2021-05-10', 5500, 3),
+(5, 'Eve', '2022-11-05', 4500, 1);
+
+INSERT INTO projects (id, name, start_date, end_date) VALUES
+(1, 'Project Alpha', '2023-01-01', '2023-12-31'),
+(2, 'Project Beta', '2023-06-01', NULL),
+(3, 'Project Gamma', '2022-03-01', '2022-10-01');
+
+INSERT INTO employee_projects (id, employee_id, project_id) VALUES
+(1, 1, 1), -- Alice - Alpha
+(2, 1, 2), -- Alice - Beta
+(3, 2, 1), -- Bob - Alpha
+(4, 2, 2), -- Bob - Beta
+(5, 2, 3), -- Bob - Gamma
+(6, 3, 2), -- Charlie - Beta
+(7, 4, 1), -- David - Alpha
+(8, 5, 2); -- Eve - Beta
+
+INSERT INTO salary_records (id, salary_date, amount, employee_id) VALUES
+(1, '2024-01-01', 5000, 1),
+(2, '2024-01-01', 6000, 2),
+(3, '2024-01-01', 4000, 3),
+(4, '2024-01-01', 5500, 4),
+(5, '2024-01-01', 4500, 5),
+(6, '2024-02-01', 5000, 1),
+(7, '2024-02-01', 6000, 2),
+(8, '2024-02-01', 4000, 3),
+(9, '2024-02-01', 5500, 4),
+(10, '2024-02-01', 4500, 5);
+
 -- 문제에서 주어진 조건은 참고만 하되 너무 복잡하다면 다르게 짜도 상관없습니다!!
 -- 같은 결과에 대해서도 다양한 답이 나올수 있음
 

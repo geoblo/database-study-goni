@@ -79,7 +79,3 @@ WHERE u.id = (
 GROUP BY nickname;
 
 
-
-
-
-
