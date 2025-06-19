@@ -135,7 +135,7 @@
 
 CREATE TABLE users (
 	id INTEGER, -- 기본키
-	email VARCHAR(100) NOT NULL UNIOUE, -- 대체키(NOT NULL UNIOUE): 데이터베이스에서 후보키 중 기본키로 선택되지 않은 키
+	email VARCHAR(100) NOT NULL UNIQUE, -- 대체키(NOT NULL UNIQUE): 데이터베이스에서 후보키 중 기본키로 선택되지 않은 키
 	name VARCHAR (50),
 	PRIMARY KEY (id)
 );
