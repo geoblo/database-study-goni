@@ -377,7 +377,7 @@ DESC order_details;
 -- (ㄹ) 선택성
 -- (ㅁ) NOT NULL
 
--- 정답:
+-- 정답: 
 
 
 
