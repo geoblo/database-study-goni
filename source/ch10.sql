@@ -301,5 +301,93 @@ CREATE TABLE orders (
 CREATE DATABASE data_modeling;
 USE data_modeling;
 
+-- users 테이블 생성
+CREATE TABLE users (
+	id INTEGER AUTO_INCREMENT, -- 아이디(자동으로 1씩 증가)
+    email VARCHAR(100) NOT NULL UNIQUE, -- 이메일(필수 입력, 고유키 지정)
+    name VARCHAR(50) NOT NULL, -- 이름(필수 입력)
+    PRIMARY KEY (id) -- 기본키 지정: id
+);
+
+DESC users;
+
+-- orders 테이블 생성
+CREATE TABLE orders (
+	id INTEGER AUTO_INCREMENT, -- 아이디(자동으로 1씩 증가)
+    status VARCHAR(50), -- 주문 상태
+    created_at DATETIME, -- 주문 일시
+    user_id INTEGER NOT NULL, -- 사용자 아이디(필수 입력) <-- 필수적 일대일 관계
+    PRIMARY KEY (id), -- 기본키 지정: id
+    FOREIGN KEY (user_id) REFERENCES users(id) -- 외래키 지정: user_id
+);
+
+DESC orders;
+
+-- payments 테이블 생성
+CREATE TABLE payments (
+	id INTEGER AUTO_INCREMENT, -- 아이디(자동으로 1씩 증가)
+    amount INTEGER NOT NULL, -- 결제 금액(필수 입력)
+    payment_type VARCHAR(50) NOT NULL, -- 결제 유형(필수 입력)
+    order_id INTEGER NOT NULL UNIQUE, -- 주문 아이디(필수 입력, 고유키 지정) <-- 필수적 일대일 관계
+    PRIMARY KEY (id), -- 기본키 지정: id
+    FOREIGN KEY (order_id) REFERENCES orders(id) -- 외래키 지정: order_id
+);
+
+DESC payments;
+
+-- products 테이블 생성
+CREATE TABLE products (
+	id INTEGER AUTO_INCREMENT, -- 아이디(자동으로 1씩 증가)
+    name VARCHAR(50) NOT NULL UNIQUE, -- 상품명(필수 입력, 고유키 지정)
+    price INTEGER NOT NULL CHECK (price > 0), -- 가격(필수입력, 양수만 허용)
+    product_type VARCHAR(50) DEFAULT 'NONE', -- 상품 유형(기본값 NONE)
+    PRIMARY KEY (id), -- 기본키 지정: id
+    INDEX idx_product_name (name) -- 인덱스 생성: name
+);
+
+DESC products;
+
+-- order_details 테이블 생성
+CREATE TABLE order_details (
+	id INTEGER AUTO_INCREMENT, -- 아이디(자동으로 1씩 증가)
+    order_id INTEGER NOT NULL, -- 주문 아이디(필수 입력) <-- 필수적 관계
+    product_id INTEGER NOT NULL, -- 상품 아이디(필수 입력) <-- 필수적 관계
+    count INTEGER NOT NULL CHECK(count > 0), -- 수량(필수 입력, 양수만 허용)
+    PRIMARY KEY (id), -- 기본키 지정: id
+    FOREIGN KEY (order_id) REFERENCES orders(id), -- 외래키 지정: order_id
+    FOREIGN KEY (product_id) REFERENCES products(id), -- 외래키 지정: product_id
+    UNIQUE (order_id, product_id) -- 고유키 지정: order_id, product_id
+    -- 하나의 주문에 같은 상품이 중복 담기지 않게 하기 위함
+    -- 한 주문에 하나의 상품이 여러 개 담기는 경우, count로 관리할 수 있게 함
+);
+
+DESC order_details;
+
+-- Quiz
+-- 4. 다음 빈칸에 들어갈 용어를 순서대로 고르시오. (예: ㄱㄴㄷㄹㅁ)
+-- ① __________: 엔티티 간 관계가 필수인지 선택인지를 정의하는 개념
+-- ② __________: 칼럼이 NULL 값을 가질 수 없게 하는 제약 조건
+-- ③ __________: 칼럼에 입력되는 값이 특정 조건을 만족하도록 하는 제약 조건
+-- ④ __________: 칼럼에 값이 입력되지 않을 때 기본으로 저장된 값을 설정하는 제약 조건
+-- ⑤ __________: 데이터베이스에서 데이터의 검색 및 정렬 성능을 빠르게 해 주는 데이터 구조로 테이블의 특정 칼럼에 생성해 활용
+
+-- (ㄱ) 인덱스
+-- (ㄴ) CHECK
+-- (ㄷ) DEFAULT
+-- (ㄹ) 선택성
+-- (ㅁ) NOT NULL
+
+-- 정답:
+
+
+
+
+
+
+
+
+
+
+
 
 
